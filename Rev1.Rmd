@@ -1,0 +1,95 @@
+---
+title: 'Review 1: BigFive'
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    fig_height: 4
+    highlight: pygments
+    theme: spacelab
+---
+### Reg. No: J Gautham & Shivaditya Shivganesh 
+
+### Name:  19BPS1104 & 19BPS1103
+
+* * *
+## Aim: To Explore BigFive Dataset
+
+## Setup
+
+```{r}
+bigfive <- read.csv('/Users/shivaditya/Downloads/big_five_stocks.csv')
+library("tidyverse") 
+library('dplyr')
+library(psych)
+library(vcd)
+```
+
+
+* * *
+
+## Dataset Description
+
+#Name of the Dataset Big Five
+
+#Description of the fields
+```{r}
+str(bigfive)
+```
+Name indicates the name of the stock. The open column denotes the opening value of the stock on a particular day. 
+The closing column denotes the closing price of the particular stock on given day.
+
+#Check For missing values
+```{r}
+which(is.na(bigfive))
+```
+
+
+#Basic commands to describe dataset
+
+* * *
+
+1. Daily return of Each stock
+```{r}
+bigfive <- mutate(bigfive, Return = 100*(close-lag(close))/lag(close) )
+bigfive
+```
+
+* * *
+
+2. Mean Percentage Return over the years
+
+```{r}
+bigfive %>%
+  group_by(name) %>%
+  summarise(Return = mean(100*(close-lag(close))/lag(close), na.rm = TRUE)) %>%
+  arrange(desc(Return))
+
+```
+* * *
+
+
+3. Worst day for each stock
+
+```{r}
+bigfive %>%
+  group_by(name) %>%
+  slice(which.min(close))
+```
+
+
+* * *
+
+
+
+```{r}
+Google = bigfive[bigfive$name=="GOOGL",]
+Amazon = bigfive[bigfive$name=="AMZN",]
+Facebook = bigfive[bigfive$name=="FB",]
+MicroSoft = bigfive[bigfive$name=="MSFT",]
+Apple = bigfive[bigfive$name=="AAPL",]
+Index = bigfive[bigfive$name=="^IXIC",]
+
+ggplot(data = bigfive, aes(x=X, y=close, group=name, color = name))+geom_line()
+```
+
