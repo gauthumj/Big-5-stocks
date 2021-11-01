@@ -1,0 +1,78 @@
+---
+title: "Stock Analysis"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+
+stocks = read.csv('./big_five_stocks.csv')
+
+stocks$X = as.POSIXct(stocks$X)
+stocks = stocks[stocks$X >= as.POSIXct("2000-01-01"),]
+View(stocks)
+```
+
+```{r}
+Google = stocks[stocks$name=="GOOGL",]
+Amazon = stocks[stocks$name=="AMZN",]
+Facebook = stocks[stocks$name=="FB",]
+Microsoft = stocks[stocks$name=="MSFT",]
+Apple = stocks[stocks$name=="AAPL",]
+Index = stocks[stocks$name=="^IXIC",]
+```
+
+```{r}
+# ggplot(data = stocks, aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Google,Index), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Amazon,Index), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Apple,Index), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Microsoft,Index), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Facebook,Index), aes(x=X, y=close, group=name, color = name))+geom_line()
+
+```
+
+```{r}
+ggplot(data = Google, aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = Amazon, aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = Apple, aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = Microsoft, aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = Facebook, aes(x=X, y=close, group=name, color = name))+geom_line()
+```
+
+
+```{r}
+ggplot(data = rbind(Apple,Google), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Apple,Amazon), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Apple,Facebook), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Apple,Microsoft), aes(x=X, y=close, group=name, color = name))+geom_line()
+
+```
+
+```{r}
+ggplot(data = rbind(Google,Apple), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Google,Amazon), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Google,Facebook), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Google,Microsoft), aes(x=X, y=close, group=name, color = name))+geom_line()
+```
+
+```{r}
+ggplot(data = rbind(Amazon,Google), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Amazon,Apple), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Amazon,Facebook), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Amazon,Microsoft), aes(x=X, y=close, group=name, color = name))+geom_line()
+```
+
+```{r}
+ggplot(data = rbind(Facebook,Google), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Facebook,Amazon), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Facebook,Apple), aes(x=X, y=close, group=name, color = name))+geom_line()
+ggplot(data = rbind(Facebook,Microsoft), aes(x=X, y=close, group=name, color = name))+geom_line()
+```
+

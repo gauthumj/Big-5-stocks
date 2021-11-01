@@ -18,7 +18,7 @@ output:
 ## Setup
 
 ```{r}
-bigfive <- read.csv('/Users/shivaditya/Downloads/big_five_stocks.csv')
+bigfive <- read.csv('big_five_stocks.csv')
 library("tidyverse") 
 library('dplyr')
 library(psych)
